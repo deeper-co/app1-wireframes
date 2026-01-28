@@ -1,0 +1,1636 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deeper App - Wireframes Finais</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #fff;
+        }
+
+        .container {
+            max-width: 420px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.03);
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .screen {
+            display: none;
+            padding: 24px 20px;
+            min-height: 600px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Navigation */
+        nav {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            background: rgba(10,14,39,0.95);
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding: 12px 8px;
+            backdrop-filter: blur(20px);
+        }
+
+        nav button {
+            background: transparent;
+            border: none;
+            border-radius: 12px;
+            padding: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #666;
+            font-size: 10px;
+            font-weight: 600;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        nav button.active {
+            background: rgba(0,102,255,0.2);
+            color: #0066FF;
+        }
+
+        nav button:hover {
+            background: rgba(255,255,255,0.05);
+        }
+
+        /* Top Buttons */
+        .top-buttons {
+            display: flex;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .top-button {
+            flex: 1;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 10px;
+            color: #0066FF;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .top-button:hover {
+            background: rgba(0,102,255,0.1);
+        }
+
+        /* Header */
+        .greeting {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .greeting h1 {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+
+        .question {
+            font-size: 18px;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 16px;
+        }
+
+        .suggestion {
+            font-size: 14px;
+            color: #888;
+            line-height: 1.5;
+            padding: 12px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px;
+            border-left: 3px solid #0066FF;
+            margin-bottom: 24px;
+        }
+
+        /* Input Area */
+        .input-container {
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        textarea {
+            width: 100%;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 16px;
+            padding-right: 100px;
+            color: #fff;
+            font-size: 15px;
+            font-family: inherit;
+            min-height: 120px;
+            resize: vertical;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        textarea:focus {
+            border-color: #0066FF;
+            background: rgba(0,102,255,0.05);
+        }
+
+        textarea::placeholder {
+            color: #666;
+        }
+
+        .input-buttons {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .icon-button {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            border: none;
+            background: rgba(0,102,255,0.15);
+            color: #0066FF;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .icon-button:hover {
+            background: #0066FF;
+            color: #fff;
+        }
+
+        .icon-button.recording {
+            background: #FF0066;
+            color: #fff;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .icon-button.send {
+            background: linear-gradient(135deg, #0066FF 0%, #00FF88 100%);
+            color: #000;
+        }
+
+        .recording-indicator {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            background: #FF0066;
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            display: none;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .recording-indicator.active {
+            display: flex;
+        }
+
+        .transcribing {
+            text-align: center;
+            padding: 40px;
+            color: #888;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #1a1f3a;
+            border-radius: 24px;
+            padding: 32px 24px;
+            max-width: 400px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 1px solid rgba(255,255,255,0.1);
+            animation: modalSlideIn 0.3s ease;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: #fff;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        @keyframes modalSlideIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .modal-header {
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .modal-body {
+            margin-bottom: 24px;
+        }
+
+        .modal-label {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .modal-input {
+            width: 100%;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 12px;
+            color: #fff;
+            font-size: 14px;
+            font-family: inherit;
+            outline: none;
+            margin-bottom: 16px;
+        }
+
+        .emoji-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin: 16px 0;
+        }
+
+        .emoji-button {
+            background: rgba(255,255,255,0.05);
+            border: 2px solid transparent;
+            border-radius: 16px;
+            padding: 16px;
+            font-size: 32px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .emoji-button:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .emoji-button.selected {
+            border-color: #0066FF;
+            background: rgba(0,102,255,0.15);
+        }
+
+        .modal-textarea {
+            width: 100%;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 12px;
+            color: #fff;
+            font-size: 14px;
+            font-family: inherit;
+            min-height: 80px;
+            resize: vertical;
+            outline: none;
+            margin-bottom: 16px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .modal-button {
+            flex: 1;
+            padding: 16px;
+            border-radius: 12px;
+            border: none;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-button.primary {
+            background: linear-gradient(135deg, #0066FF 0%, #00FF88 100%);
+            color: #000;
+        }
+
+        .modal-button.secondary {
+            background: rgba(255,255,255,0.05);
+            color: #fff;
+        }
+
+        .modal-button:hover {
+            transform: scale(1.02);
+        }
+
+        /* Insight Card */
+        .insight-card {
+            background: linear-gradient(135deg, rgba(0,102,255,0.1) 0%, rgba(0,255,136,0.05) 100%);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(0,102,255,0.2);
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .insight-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #00FF88;
+            margin-bottom: 12px;
+        }
+
+        .insight-text {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #ddd;
+        }
+
+        .continue-button {
+            width: 100%;
+            background: linear-gradient(135deg, #0066FF 0%, #00FF88 100%);
+            border: none;
+            border-radius: 16px;
+            padding: 16px;
+            color: #000;
+            font-size: 16px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .continue-button:hover {
+            transform: scale(1.02);
+        }
+
+        /* Aba 2 - Insights */
+        .focus-card {
+            background: rgba(255,255,255,0.03);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .focus-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .focus-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #0066FF;
+        }
+
+        .edit-button {
+            background: rgba(0,102,255,0.15);
+            border: none;
+            border-radius: 8px;
+            padding: 6px 12px;
+            color: #0066FF;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .edit-button:hover {
+            background: rgba(0,102,255,0.25);
+        }
+
+        .focus-text {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .focus-subtitle {
+            font-size: 13px;
+            color: #888;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .exercise-card {
+            background: rgba(255,255,255,0.03);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 12px;
+            border: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .exercise-card.completed {
+            background: linear-gradient(135deg, rgba(0,255,136,0.15) 0%, rgba(0,204,102,0.05) 100%);
+            border-color: rgba(0,255,136,0.3);
+            cursor: pointer;
+        }
+
+        .exercise-card.completed:hover {
+            background: linear-gradient(135deg, rgba(0,255,136,0.2) 0%, rgba(0,204,102,0.1) 100%);
+        }
+
+        .exercise-checkbox {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            border: 2px solid rgba(255,255,255,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .exercise-card.completed .exercise-checkbox {
+            background: #00FF88;
+            border-color: #00FF88;
+            color: #000;
+            font-weight: 800;
+        }
+
+        .exercise-info {
+            flex: 1;
+        }
+
+        .exercise-name {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .exercise-status {
+            font-size: 12px;
+            color: #888;
+        }
+
+        .exercise-card.completed .exercise-status {
+            color: #00FF88;
+        }
+
+        .exercise-link {
+            font-size: 12px;
+            color: #0066FF;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .add-exercise-button {
+            width: 100%;
+            background: rgba(255,255,255,0.05);
+            border: 2px dashed rgba(255,255,255,0.2);
+            border-radius: 16px;
+            padding: 16px;
+            color: #0066FF;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .add-exercise-button:hover {
+            background: rgba(0,102,255,0.1);
+            border-color: #0066FF;
+        }
+
+        .insights-text {
+            background: rgba(255,255,255,0.03);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(255,255,255,0.05);
+            font-size: 14px;
+            line-height: 1.7;
+            color: #ddd;
+        }
+
+        .insights-text p {
+            margin-bottom: 16px;
+        }
+
+        .insights-text p:last-child {
+            margin-bottom: 0;
+        }
+
+        .correlation-card {
+            background: linear-gradient(135deg, rgba(0,255,136,0.1) 0%, rgba(0,102,255,0.05) 100%);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid rgba(0,255,136,0.2);
+        }
+
+        .correlation-title {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .correlation-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .correlation-row:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .correlation-label {
+            font-size: 13px;
+            color: #aaa;
+        }
+
+        .correlation-value {
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .correlation-highlight {
+            font-size: 13px;
+            color: #00FF88;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-weight: 600;
+        }
+
+        /* Exercise Options */
+        .exercise-options {
+            margin-bottom: 16px;
+        }
+
+        .exercise-option {
+            background: rgba(0,102,255,0.1);
+            border: 2px solid rgba(0,102,255,0.3);
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .exercise-option:hover {
+            background: rgba(0,102,255,0.2);
+            border-color: #0066FF;
+        }
+
+        /* Info Footer */
+        .info-footer {
+            text-align: center;
+            margin-top: 20px;
+            padding: 20px;
+            font-size: 12px;
+            color: #666;
+            font-family: monospace;
+        }
+
+        /* Program Screen */
+        .progress-card {
+            background: linear-gradient(135deg, rgba(0,102,255,0.1) 0%, rgba(0,255,136,0.05) 100%);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(0,102,255,0.2);
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .progress-value {
+            font-weight: 700;
+            color: #0066FF;
+        }
+
+        .progress-bar {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            height: 12px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #0066FF 0%, #00FF88 100%);
+            height: 100%;
+            border-radius: 12px;
+            transition: width 0.5s ease;
+        }
+
+        .week-card {
+            background: rgba(255,255,255,0.03);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 16px;
+            border: 1px solid rgba(255,255,255,0.05);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .week-card.current {
+            background: linear-gradient(135deg, rgba(0,102,255,0.15) 0%, rgba(0,255,136,0.05) 100%);
+            border: 2px solid #0066FF;
+        }
+
+        .week-card.locked {
+            opacity: 0.5;
+            cursor: default;
+        }
+
+        .week-card:hover:not(.locked) {
+            transform: translateY(-2px);
+        }
+
+        .week-icon {
+            font-size: 36px;
+            width: 56px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+        }
+
+        .week-info {
+            flex: 1;
+        }
+
+        .week-number {
+            font-size: 12px;
+            font-weight: 700;
+            color: #888;
+            margin-bottom: 4px;
+        }
+
+        .week-title {
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+
+        .week-subtitle {
+            font-size: 13px;
+            color: #aaa;
+        }
+
+        .week-status {
+            font-size: 24px;
+        }
+
+        /* Profile Screen */
+        .profile-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .avatar {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #0066FF 0%, #00FF88 100%);
+            border-radius: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 56px;
+            box-shadow: 0 12px 32px rgba(0,102,255,0.4);
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .avatar:hover {
+            transform: scale(1.05);
+        }
+
+        .avatar-edit {
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,102,255,0.9);
+            border-radius: 12px;
+            padding: 6px 12px;
+            font-size: 12px;
+            font-weight: 700;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .avatar:hover .avatar-edit {
+            opacity: 1;
+            bottom: -12px;
+        }
+
+        .photo-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .photo-option {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .photo-option:hover {
+            background: rgba(0,102,255,0.1);
+            border-color: #0066FF;
+        }
+
+        .photo-option-icon {
+            font-size: 24px;
+        }
+
+        .level-badge {
+            position: absolute;
+            bottom: -12px;
+            right: -12px;
+            background: #FF6B00;
+            border-radius: 16px;
+            padding: 8px 12px;
+            font-size: 14px;
+            font-weight: 800;
+            box-shadow: 0 4px 12px rgba(255,107,0,0.4);
+        }
+
+        .profile-name {
+            font-size: 24px;
+            font-weight: 800;
+            margin: 0 0 8px 0;
+        }
+
+        .profile-sport {
+            font-size: 14px;
+            color: #888;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            background: rgba(255,255,255,0.03);
+            border-radius: 16px;
+            padding: 20px 12px;
+            border: 1px solid rgba(255,255,255,0.05);
+            text-align: center;
+        }
+
+        .stat-icon {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #888;
+            font-weight: 600;
+        }
+
+        .menu-item {
+            background: rgba(255,255,255,0.03);
+            border-radius: 16px;
+            padding: 16px 20px;
+            margin-bottom: 12px;
+            border: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .menu-item:hover {
+            background: rgba(255,255,255,0.05);
+        }
+
+        .menu-icon {
+            font-size: 24px;
+        }
+
+        .menu-label {
+            flex: 1;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .menu-arrow {
+            font-size: 20px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ABA 1: CONVERSA -->
+        <div id="conversa" class="screen active">
+            <div class="greeting">
+                <h1 id="greetingText">Bom dia, Gabriel! 🌅</h1>
+            </div>
+
+            <div class="question" id="questionText">
+                Como foi seu fim de semana?
+            </div>
+
+            <div class="suggestion" id="suggestionText">
+                💡 Você pode contar algumas atividades que fez, novidades ou aprendizados.
+            </div>
+
+            <div class="input-container">
+                <div class="recording-indicator" id="recordingIndicator">
+                    🔴 Gravando... <span id="recordingTime">0:00</span>
+                </div>
+                <textarea id="responseInput" placeholder="Escreva aqui ou use o microfone..."></textarea>
+                <div class="input-buttons">
+                    <button class="icon-button" id="micButton" onclick="toggleRecording()">🎤</button>
+                    <button class="icon-button send" onclick="sendResponse()">➤</button>
+                </div>
+            </div>
+
+            <div class="top-buttons">
+                <button class="top-button" onclick="generateNewQuestion()">
+                    🔄 Outra pergunta
+                </button>
+                <button class="top-button" onclick="showFreeMode()">
+                    💭 Falar livre
+                </button>
+            </div>
+        </div>
+
+        <!-- TELA: INSIGHT -->
+        <div id="insight" class="screen">
+            <div class="insight-card">
+                <div class="insight-title">✓ RESPOSTA REGISTRADA!</div>
+                <div class="insight-text" id="insightText">
+                    Vitória no sábado + descanso no domingo = ótimo equilíbrio!<br><br>
+                    Essa combinação de performance e recuperação é ideal. 🔥
+                </div>
+            </div>
+            <button class="continue-button" onclick="showNextQuestion()">✓ OK</button>
+        </div>
+
+        <!-- ABA 2: INSIGHTS -->
+        <div id="insights" class="screen">
+            <h2 style="font-size: 28px; font-weight: 800; margin-bottom: 24px;">📊 Seus Insights</h2>
+
+            <div class="focus-card">
+                <div class="focus-header">
+                    <div class="focus-title">🎯 FOCO DESTA SEMANA:</div>
+                    <button class="edit-button" onclick="editFocus()">✏️ Editar</button>
+                </div>
+                <div class="focus-text" id="weeklyFocus">Melhorar saque sob pressão</div>
+                <div class="focus-subtitle">💡 Baseado no que você contou nos últimos dias.</div>
+            </div>
+
+            <div class="section-title">💪 TREINO MENTAL DA SEMANA:</div>
+
+            <div class="exercise-card" id="exercise1" onclick="completeExercise(1)">
+                <div class="exercise-checkbox">□</div>
+                <div class="exercise-info">
+                    <div class="exercise-name">Visualização pré-jogo</div>
+                    <div class="exercise-status">Ainda não praticado</div>
+                </div>
+                <a href="#" class="exercise-link" onclick="event.stopPropagation(); goToProgram()">Ver aula →</a>
+            </div>
+
+            <div class="exercise-card completed" id="exercise2" onclick="completeExercise(2)">
+                <div class="exercise-checkbox">✓</div>
+                <div class="exercise-info">
+                    <div class="exercise-name">Respiração 4-7-8</div>
+                    <div class="exercise-status">Praticado 2x</div>
+                </div>
+                <a href="#" class="exercise-link" onclick="event.stopPropagation(); goToProgram()">Ver aula →</a>
+            </div>
+
+            <div class="exercise-card" id="exercise3" onclick="completeExercise(3)">
+                <div class="exercise-checkbox">□</div>
+                <div class="exercise-info">
+                    <div class="exercise-name">Reset mental pós-erro</div>
+                    <div class="exercise-status">Ainda não praticado</div>
+                </div>
+                <a href="#" class="exercise-link" onclick="event.stopPropagation(); goToProgram()">Ver aula →</a>
+            </div>
+
+            <button class="add-exercise-button" onclick="addExercise()">+ Adicionar prática</button>
+
+            <div class="section-title">💡 INSIGHTS:</div>
+
+            <div class="insights-text">
+                <p>Você está indo muito bem, Gabriel! Nos últimos 15 dias, sua confiança pré-jogo aumentou de 5.5/10 para 7.2/10 (+31%). Isso é reflexo da sua consistência em praticar visualização antes dos jogos.</p>
+                
+                <p>Percebi um padrão: quando você pratica visualização, sua taxa de vitória é 2.5x maior (75% vs 30%). Continue assim! 🔥</p>
+                
+                <p>Nos últimos 2 torneios, você melhorou seu tempo em 12 segundos (10'30 → 10'18). Seu foco atual em saque sob pressão faz sentido, pois você mencionou que é onde mais erra em momentos críticos.</p>
+                
+                <p>Lembre-se: resiliência não é nunca cair, é levantar rápido. Você passou de 3-4 dias pra se recuperar de derrotas para apenas 1 dia. Isso é evolução real! 💪</p>
+            </div>
+
+            <div class="section-title" style="margin-top: 24px;">📊 O QUE FUNCIONA PRA VOCÊ:</div>
+
+            <div class="correlation-card">
+                <div class="correlation-title">Jogos com VISUALIZAÇÃO:</div>
+                <div class="correlation-row">
+                    <div class="correlation-label">Confiança:</div>
+                    <div class="correlation-value" style="color: #00FF88;">7.8/10</div>
+                </div>
+                <div class="correlation-row">
+                    <div class="correlation-label">Taxa de vitória:</div>
+                    <div class="correlation-value" style="color: #00FF88;">75%</div>
+                </div>
+
+                <div style="margin: 16px 0; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 16px;">
+                    <div class="correlation-title">Jogos SEM visualização:</div>
+                    <div class="correlation-row">
+                        <div class="correlation-label">Confiança:</div>
+                        <div class="correlation-value" style="color: #FF0066;">5.2/10</div>
+                    </div>
+                    <div class="correlation-row">
+                        <div class="correlation-label">Taxa de vitória:</div>
+                        <div class="correlation-value" style="color: #FF0066;">30%</div>
+                    </div>
+                </div>
+
+                <div class="correlation-highlight">
+                    💡 Visualizar aumenta sua chance de ganhar em 2.5x!
+                </div>
+            </div>
+        </div>
+
+        <!-- ABA 3: PROGRAMA -->
+        <div id="programa" class="screen">
+            <div style="margin-bottom: 32px;">
+                <h2 style="font-size: 28px; font-weight: 800; margin: 0 0 8px 0;">🎓 Treinamento Mental</h2>
+                <p style="font-size: 14px; color: #888; margin: 0;">8 Semanas de Confiança Inabalável</p>
+            </div>
+
+            <div class="progress-card">
+                <div class="progress-header">
+                    <span>Seu Progresso</span>
+                    <span class="progress-value">3/8 semanas</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 37.5%;"></div>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 80px;">
+                <div class="week-card">
+                    <div class="week-icon">🧘</div>
+                    <div class="week-info">
+                        <div class="week-number">SEMANA 1</div>
+                        <div class="week-title">Plenitude</div>
+                        <div class="week-subtitle">Estar 100% Presente</div>
+                    </div>
+                    <div class="week-status">✓</div>
+                </div>
+
+                <div class="week-card">
+                    <div class="week-icon">👁️</div>
+                    <div class="week-info">
+                        <div class="week-number">SEMANA 2</div>
+                        <div class="week-title">Visualização</div>
+                        <div class="week-subtitle">Ver-se Performando Bem</div>
+                    </div>
+                    <div class="week-status">✓</div>
+                </div>
+
+                <div class="week-card current">
+                    <div class="week-icon">⚓</div>
+                    <div class="week-info">
+                        <div class="week-number">SEMANA 3</div>
+                        <div class="week-title">Âncoras</div>
+                        <div class="week-subtitle">Gatilhos de Confiança</div>
+                    </div>
+                    <div class="week-status">▶️</div>
+                </div>
+
+                <div class="week-card locked">
+                    <div class="week-icon">💬</div>
+                    <div class="week-info">
+                        <div class="week-number">SEMANA 4</div>
+                        <div class="week-title">Diálogo Interno</div>
+                        <div class="week-subtitle">Reescrever a Voz</div>
+                    </div>
+                    <div class="week-status">🔒</div>
+                </div>
+
+                <div class="week-card locked">
+                    <div class="week-icon">🎭</div>
+                    <div class="week-info">
+                        <div class="week-number">SEMANA 5</div>
+                        <div class="week-title">Alter Ego</div>
+                        <div class="week-subtitle">Ser Quem Você Quer Ser</div>
+                    </div>
+                    <div class="week-status">🔒</div>
+                </div>
+
+                <div class="week-card locked">
+                    <div class="week-icon">🛡️</div>
+                    <div class="week-info">
+                        <div class="week-number">SEMANA 6</div>
+                        <div class="week-title">Estoicismo</div>
+                        <div class="week-subtitle">Controle o Que Controla</div>
+                    </div>
+                    <div class="week-status">🔒</div>
+                </div>
+
+                <div class="week-card locked">
+                    <div class="week-icon">🧠</div>
+                    <div class="week-info">
+                        <div class="week-number">SEMANA 7</div>
+                        <div class="week-title">TCC</div>
+                        <div class="week-subtitle">Questionar Pensamentos</div>
+                    </div>
+                    <div class="week-status">🔒</div>
+                </div>
+
+                <div class="week-card locked">
+                    <div class="week-icon">🏆</div>
+                    <div class="week-info">
+                        <div class="week-number">SEMANA 8</div>
+                        <div class="week-title">Ritual</div>
+                        <div class="week-subtitle">Seu Ritual Perfeito</div>
+                    </div>
+                    <div class="week-status">🔒</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ABA 4: PERFIL -->
+        <div id="perfil" class="screen">
+            <div class="profile-header">
+                <div class="avatar" onclick="changePhoto()">
+                    🏆
+                    <div class="level-badge">Lv. 3</div>
+                    <div class="avatar-edit">✏️ Trocar foto</div>
+                </div>
+                <h2 class="profile-name">Gabriel Santos</h2>
+                <p class="profile-sport">Tênis • 22 anos • Semi-profissional</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">🔥</div>
+                    <div class="stat-value">7</div>
+                    <div class="stat-label">Streak</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📚</div>
+                    <div class="stat-value">3/8</div>
+                    <div class="stat-label">Semanas</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">⭐</div>
+                    <div class="stat-value">1.2k</div>
+                    <div class="stat-label">XP Total</div>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 80px;">
+                <div class="menu-item">
+                    <div class="menu-icon">👤</div>
+                    <div class="menu-label">Editar Perfil</div>
+                    <div class="menu-arrow">›</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-icon">📅</div>
+                    <div class="menu-label">Cronograma Semanal</div>
+                    <div class="menu-arrow">›</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-icon">🏅</div>
+                    <div class="menu-label">Badges e Conquistas</div>
+                    <div class="menu-arrow">›</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-icon">⭐</div>
+                    <div class="menu-label">Upgrade Premium</div>
+                    <div class="menu-arrow">›</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-icon">⚙️</div>
+                    <div class="menu-label">Configurações</div>
+                    <div class="menu-arrow">›</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-icon">💬</div>
+                    <div class="menu-label">Ajuda & Suporte</div>
+                    <div class="menu-arrow">›</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <nav>
+            <button data-screen="conversa" class="active" onclick="navigateTo('conversa')">
+                <span style="font-size: 24px;">💬</span>
+                <div>Conversa</div>
+            </button>
+            <button data-screen="insights" onclick="navigateTo('insights')">
+                <span style="font-size: 24px;">📊</span>
+                <div>Insights</div>
+            </button>
+            <button data-screen="programa" onclick="navigateTo('programa')">
+                <span style="font-size: 24px;">🎓</span>
+                <div>Programa</div>
+            </button>
+            <button data-screen="perfil" onclick="navigateTo('perfil')">
+                <span style="font-size: 24px;">👤</span>
+                <div>Perfil</div>
+            </button>
+        </nav>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal" id="completeExerciseModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('completeExerciseModal')">✕</button>
+            <div class="modal-header">✓ EXERCÍCIO COMPLETADO</div>
+            <div class="modal-body">
+                <div class="modal-label">Você praticou:</div>
+                <div style="font-size: 16px; font-weight: 600; margin-bottom: 16px;" id="exerciseNameModal">Visualização pré-jogo</div>
+                
+                <div class="modal-label">Como foi?</div>
+                <div class="emoji-buttons">
+                    <button class="emoji-button" onclick="selectEmoji(1)">😰</button>
+                    <button class="emoji-button" onclick="selectEmoji(2)">😐</button>
+                    <button class="emoji-button" onclick="selectEmoji(3)">😎</button>
+                </div>
+
+                <div class="modal-label">Quer contar mais? (opcional)</div>
+                <textarea class="modal-textarea" id="exerciseFeedback" placeholder="Escreva aqui ou grave áudio..."></textarea>
+                <div style="text-align: right; margin-bottom: 16px;">
+                    <button class="icon-button" onclick="recordModalAudio()">🎤</button>
+                </div>
+            </div>
+            <button class="modal-button primary" onclick="submitExerciseComplete()">Enviar!</button>
+        </div>
+    </div>
+
+    <div class="modal" id="addExerciseModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('addExerciseModal')">✕</button>
+            <div class="modal-header">➕ REGISTRAR PRÁTICA</div>
+            <div class="modal-body">
+                <div class="modal-label">Qual exercício você praticou?</div>
+                <input type="text" class="modal-input" id="customExerciseName" placeholder="Ex: Meditação, outro...">
+                
+                <div class="modal-label">Ou escolha um da lista:</div>
+                <div class="exercise-options">
+                    <div class="exercise-option" onclick="selectExerciseOption('Visualização pré-jogo')">Visualização pré-jogo</div>
+                    <div class="exercise-option" onclick="selectExerciseOption('Respiração 4-7-8')">Respiração 4-7-8</div>
+                    <div class="exercise-option" onclick="selectExerciseOption('Reset mental pós-erro')">Reset mental pós-erro</div>
+                </div>
+
+                <div class="modal-label">Como foi?</div>
+                <div class="emoji-buttons">
+                    <button class="emoji-button" onclick="selectEmoji(1)">😰</button>
+                    <button class="emoji-button" onclick="selectEmoji(2)">😐</button>
+                    <button class="emoji-button" onclick="selectEmoji(3)">😎</button>
+                </div>
+
+                <div class="modal-label">Quer contar mais? (opcional)</div>
+                <textarea class="modal-textarea" id="addExerciseFeedback" placeholder="Escreva aqui ou grave áudio..."></textarea>
+                <div style="text-align: right; margin-bottom: 16px;">
+                    <button class="icon-button" onclick="recordModalAudio()">🎤</button>
+                </div>
+            </div>
+            <button class="modal-button primary" onclick="submitAddExercise()">Enviar!</button>
+        </div>
+    </div>
+
+    <div class="modal" id="editFocusModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('editFocusModal')">✕</button>
+            <div class="modal-header">✏️ EDITAR FOCO DA SEMANA</div>
+            <div class="modal-body">
+                <div class="modal-label">No que você quer focar esta semana?</div>
+                <textarea class="modal-textarea" id="focusInput" style="min-height: 60px;">Melhorar saque sob pressão</textarea>
+                
+                <div style="font-size: 13px; color: #888; line-height: 1.5; margin-top: 12px;">
+                    💡 Seja específico. Exemplos:<br>
+                    • Melhorar controle emocional<br>
+                    • Aumentar confiança no saque<br>
+                    • Lidar melhor com erros<br>
+                    • Manter foco em jogos longos
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="modal-button secondary" onclick="closeModal('editFocusModal')">Cancelar</button>
+                <button class="modal-button primary" onclick="saveFocus()">Salvar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="changePhotoModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('changePhotoModal')">✕</button>
+            <div class="modal-header">📸 Trocar Foto de Perfil</div>
+            <div class="modal-body">
+                <div class="photo-options">
+                    <div class="photo-option" onclick="takePhoto()">
+                        <div class="photo-option-icon">📷</div>
+                        <div>Tirar foto</div>
+                    </div>
+                    <div class="photo-option" onclick="choosePhoto()">
+                        <div class="photo-option-icon">🖼️</div>
+                        <div>Escolher da galeria</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="info-footer">
+        Wireframe Interativo - Deeper App v3.0 Final<br>
+        Navegue pelas abas inferiores para explorar
+    </div>
+
+    <script>
+        // State
+        let isRecording = false;
+        let recordingStartTime = 0;
+        let recordingInterval = null;
+        let selectedEmoji = null;
+        let exerciseCount = {
+            1: 0,
+            2: 2,
+            3: 0
+        };
+
+        const questions = [
+            { 
+                text: "Como foi seu fim de semana?",
+                suggestion: "💡 Você pode contar algumas atividades que fez, novidades ou aprendizados."
+            },
+            {
+                text: "Quais são seus objetivos para esta semana?",
+                suggestion: "💡 Você pode falar sobre metas de performance, técnicas que quer melhorar ou desafios mentais que quer trabalhar."
+            },
+            {
+                text: "O que te ajudou a ficar confiante nos últimos jogos?",
+                suggestion: "💡 Você pode falar sobre preparação mental, rotinas ou algo que mudou na sua abordagem."
+            },
+            {
+                text: "Como está indo a semana até agora?",
+                suggestion: "💡 Você pode falar sobre treinos, jogos, desafios ou momentos positivos que teve."
+            },
+            {
+                text: "O que você aprendeu sobre você mesmo esta semana?",
+                suggestion: "💡 Você pode falar sobre descobertas, padrões que percebeu ou insights sobre sua mentalidade."
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+
+        // Navigation
+        function navigateTo(screenId) {
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            document.getElementById(screenId).classList.add('active');
+            
+            document.querySelectorAll('nav button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`nav button[data-screen="${screenId}"]`)?.classList.add('active');
+            
+            window.scrollTo(0, 0);
+        }
+
+        // Recording
+        function toggleRecording() {
+            const micButton = document.getElementById('micButton');
+            const indicator = document.getElementById('recordingIndicator');
+            const textarea = document.getElementById('responseInput');
+            
+            if (!isRecording) {
+                isRecording = true;
+                micButton.classList.add('recording');
+                indicator.classList.add('active');
+                recordingStartTime = Date.now();
+                
+                recordingInterval = setInterval(() => {
+                    const elapsed = Math.floor((Date.now() - recordingStartTime) / 1000);
+                    const minutes = Math.floor(elapsed / 60);
+                    const seconds = elapsed % 60;
+                    document.getElementById('recordingTime').textContent = 
+                        `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                }, 1000);
+                
+                textarea.value = '';
+            } else {
+                isRecording = false;
+                micButton.classList.remove('recording');
+                indicator.classList.remove('active');
+                clearInterval(recordingInterval);
+                
+                // Simulate transcription
+                textarea.value = 'Transcrevendo...';
+                setTimeout(() => {
+                    textarea.value = 'Fim de semana foi tranquilo. Sábado joguei amistoso e ganhei 3-1. Domingo descansou com a família.';
+                }, 1500);
+            }
+        }
+
+        // Send Response
+        function sendResponse() {
+            const textarea = document.getElementById('responseInput');
+            if (!textarea.value.trim()) {
+                alert('Por favor, escreva ou grave uma resposta primeiro.');
+                return;
+            }
+            
+            navigateTo('insight');
+            textarea.value = '';
+        }
+
+        // Show Next Question
+        function showNextQuestion() {
+            currentQuestionIndex = (currentQuestionIndex + 1) % questions.length;
+            const question = questions[currentQuestionIndex];
+            document.getElementById('questionText').textContent = question.text;
+            document.getElementById('suggestionText').textContent = question.suggestion;
+            navigateTo('conversa');
+        }
+
+        // Generate New Question
+        function generateNewQuestion() {
+            showNextQuestion();
+        }
+
+        // Free Mode
+        function showFreeMode() {
+            document.getElementById('questionText').textContent = 'Fale sobre o que quiser';
+            document.getElementById('suggestionText').textContent = '💡 Pode ser algo que aconteceu, um aprendizado, uma dúvida ou qualquer coisa que queira compartilhar comigo.';
+        }
+
+        // Complete Exercise
+        function completeExercise(exerciseId) {
+            const exercises = ['', 'Visualização pré-jogo', 'Respiração 4-7-8', 'Reset mental pós-erro'];
+            document.getElementById('exerciseNameModal').textContent = exercises[exerciseId];
+            document.getElementById('completeExerciseModal').classList.add('active');
+            
+            // Store which exercise
+            document.getElementById('completeExerciseModal').dataset.exerciseId = exerciseId;
+        }
+
+        function submitExerciseComplete() {
+            if (selectedEmoji === null) {
+                alert('Por favor, selecione como foi o exercício.');
+                return;
+            }
+            
+            const exerciseId = document.getElementById('completeExerciseModal').dataset.exerciseId;
+            
+            // Se já foi completado antes, apenas incrementa contador
+            if (exerciseCount[exerciseId] > 0) {
+                exerciseCount[exerciseId]++;
+            } else {
+                // Primeira vez completando
+                exerciseCount[exerciseId] = 1;
+            }
+            
+            const card = document.getElementById(`exercise${exerciseId}`);
+            card.classList.add('completed');
+            card.querySelector('.exercise-checkbox').textContent = '✓';
+            card.querySelector('.exercise-status').textContent = `Praticado ${exerciseCount[exerciseId]}x`;
+            
+            closeModal('completeExerciseModal');
+            selectedEmoji = null;
+            document.querySelectorAll('.emoji-button').forEach(btn => btn.classList.remove('selected'));
+            document.getElementById('exerciseFeedback').value = '';
+        }
+
+        // Add Exercise
+        function addExercise() {
+            document.getElementById('addExerciseModal').classList.add('active');
+            selectedEmoji = null;
+            document.querySelectorAll('.emoji-button').forEach(btn => btn.classList.remove('selected'));
+        }
+
+        function selectExerciseOption(exerciseName) {
+            document.getElementById('customExerciseName').value = exerciseName;
+        }
+
+        function submitAddExercise() {
+            const exerciseName = document.getElementById('customExerciseName').value.trim();
+            
+            if (!exerciseName) {
+                alert('Por favor, digite ou selecione um exercício.');
+                return;
+            }
+            
+            if (selectedEmoji === null) {
+                alert('Por favor, selecione como foi o exercício.');
+                return;
+            }
+            
+            // Check if it's one of the suggested exercises
+            if (exerciseName === 'Respiração 4-7-8') {
+                exerciseCount[2]++;
+                document.querySelector('#exercise2 .exercise-status').textContent = `Praticado ${exerciseCount[2]}x`;
+            }
+            
+            alert('Prática registrada! 🔥');
+            closeModal('addExerciseModal');
+            selectedEmoji = null;
+            document.querySelectorAll('.emoji-button').forEach(btn => btn.classList.remove('selected'));
+            document.getElementById('customExerciseName').value = '';
+            document.getElementById('addExerciseFeedback').value = '';
+        }
+
+        // Select Emoji
+        function selectEmoji(emojiId) {
+            selectedEmoji = emojiId;
+            document.querySelectorAll('.emoji-button').forEach(btn => btn.classList.remove('selected'));
+            event.target.classList.add('selected');
+        }
+
+        // Edit Focus
+        function editFocus() {
+            document.getElementById('editFocusModal').classList.add('active');
+        }
+
+        function saveFocus() {
+            const newFocus = document.getElementById('focusInput').value.trim();
+            if (newFocus) {
+                document.getElementById('weeklyFocus').textContent = newFocus;
+            }
+            closeModal('editFocusModal');
+        }
+
+        // Modal Audio (placeholder)
+        function recordModalAudio() {
+            alert('Funcionalidade de áudio no modal (simulação)');
+        }
+
+        // Close Modal
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        // Close modal on outside click
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                }
+            });
+        });
+
+        // Go to Program
+        function goToProgram() {
+            navigateTo('programa');
+        }
+
+        // Change Photo
+        function changePhoto() {
+            document.getElementById('changePhotoModal').classList.add('active');
+        }
+
+        function takePhoto() {
+            alert('Abrindo câmera... (simulação)');
+            closeModal('changePhotoModal');
+        }
+
+        function choosePhoto() {
+            alert('Abrindo galeria... (simulação)');
+            closeModal('changePhotoModal');
+        }
+    </script>
+</body>
+</html>
